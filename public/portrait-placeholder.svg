@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Portrait placeholder">
+  <defs>
+    <linearGradient id="field" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#f7f7f8" />
+      <stop offset="1" stop-color="#e9e9ee" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="1000" fill="url(#field)" />
+
+  <!-- Abstract concentric rings, echoing the signature object. Deliberately
+       not a silhouette: this is a placeholder, and must never be mistaken
+       for a photograph of a person. -->
+  <g fill="none" stroke="#c9c9d1">
+    <circle cx="400" cy="470" r="300" stroke-width="1" opacity="0.85" />
+    <circle cx="400" cy="470" r="232" stroke-width="1" opacity="0.7" />
+    <circle cx="400" cy="470" r="164" stroke-width="6" opacity="0.5" />
+    <circle cx="400" cy="470" r="96" stroke-width="1" opacity="0.6" />
+  </g>
+  <g stroke="#c9c9d1" stroke-width="1" opacity="0.5">
+    <line x1="400" y1="170" x2="400" y2="770" />
+    <line x1="100" y1="470" x2="700" y2="470" />
+  </g>
+  <circle cx="400" cy="470" r="7" fill="#006edb" />
+</svg>

@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.next/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Tooling caches
+.cache/
+*.tsbuildinfo
+
+# Agent skill installs (tooling, not project source)
+.agents/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
