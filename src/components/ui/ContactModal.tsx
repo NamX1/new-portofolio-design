@@ -2,18 +2,17 @@ import { useEffect, useId, useRef } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import Button from './Button';
 import { contactModal } from '../../data/content';
-import { cn } from '../../lib/utils';
 
 /* ---------------------------------------------------------------------------
-   Named motion values, never inline magic numbers. A critically damped
-   spring (bounce 0) for a dialog that was not thrown by a gesture, and an
-   opacity-only cross-fade when reduced motion is requested.
+   Named motion values. Critically damped, no overshoot: a dialog that was not
+   thrown by a gesture should not bounce. Reduced motion gets a pure
+   cross-fade with no scale or offset.
    ------------------------------------------------------------------------ */
-const SPRING_RESPONSE = 0.32;
-const PANEL_SCALE_FROM = 0.96;
-const PANEL_OFFSET_PX = 8;
-const CROSS_FADE_SECONDS = 0.18;
-const SCRIM_FADE_SECONDS = 0.24;
+const SPRING_RESPONSE = 0.34;
+const PANEL_SCALE_FROM = 0.97;
+const PANEL_OFFSET_PX = 10;
+const CROSS_FADE_SECONDS = 0.2;
+const SCRIM_FADE_SECONDS = 0.26;
 
 const SPRING_TRANSITION = { type: 'spring', bounce: 0, duration: SPRING_RESPONSE } as const;
 const FADE_TRANSITION = { duration: CROSS_FADE_SECONDS, ease: 'linear' } as const;
@@ -71,7 +70,9 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
     };
   }, [open, onClose]);
 
-  const hidden = reduceMotion ? { opacity: 0 } : { opacity: 0, scale: PANEL_SCALE_FROM, y: PANEL_OFFSET_PX };
+  const hidden = reduceMotion
+    ? { opacity: 0 }
+    : { opacity: 0, scale: PANEL_SCALE_FROM, y: PANEL_OFFSET_PX };
   const visible = reduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 };
 
   return (
@@ -109,16 +110,14 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
               animate={visible}
               exit={hidden}
               transition={reduceMotion ? FADE_TRANSITION : SPRING_TRANSITION}
-              className={cn(
-                'pointer-events-auto w-full max-w-md rounded-2xl bg-white p-7',
-                'border border-rule shadow-[0_24px_60px_-20px_rgb(0_0_0/0.35)]',
-              )}
+              className="pointer-events-auto w-full max-w-md border border-rule bg-paper p-8 shadow-[0_28px_60px_-28px_rgb(20_17_15/0.45)]"
             >
-              <h2 id={titleId} className="text-card font-semibold tracking-snug text-ink">
+              <p className="font-mono text-data tracking-data text-vermilion uppercase">Contact</p>
+              <h2 id={titleId} className="mt-4 text-heading font-semibold tracking-heading text-ink">
                 {contactModal.title}
               </h2>
-              <p className="mt-3 text-body text-ink-secondary">{contactModal.body}</p>
-              <div className="mt-7">
+              <p className="mt-3 text-body text-ink-2">{contactModal.body}</p>
+              <div className="mt-8">
                 <Button onClick={onClose}>{contactModal.closeLabel}</Button>
               </div>
             </motion.div>

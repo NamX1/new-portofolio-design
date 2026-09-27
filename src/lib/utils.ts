@@ -3,29 +3,17 @@ import { extendTailwindMerge } from 'tailwind-merge';
 
 /**
  * twMerge only knows Tailwind's stock theme. This project defines its own
- * type scale in src/index.css, so twMerge would classify a name like
- * `text-small` as a *text colour* — collide it with `text-ink`, and it
- * silently deletes the font size. Every custom size is registered here so
- * conflict resolution stays honest.
+ * scale in src/index.css, so an unregistered name like `text-data` would be
+ * read as a text *colour* and silently deleted on collision. Registering the
+ * real scale keeps conflict resolution honest.
  */
 const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
       'font-size': [
-        {
-          text: [
-            'micro',
-            'small',
-            'body',
-            'lede',
-            'card',
-            'display',
-            'heading',
-            'statement',
-          ],
-        },
+        { text: ['display', 'statement', 'heading', 'sub', 'body', 'small', 'data'] },
       ],
-      tracking: [{ tracking: ['display', 'tight', 'snug', 'normal', 'eyebrow'] }],
+      tracking: [{ tracking: ['display', 'statement', 'heading', 'body', 'data'] }],
     },
   },
 });
@@ -36,15 +24,13 @@ export function cn(...inputs: ClassValue[]): string {
 }
 
 /**
- * Press feedback. Responds on pointer-down, not release: the background
- * steps darker immediately, with a whisper of scale so the target feels
- * physical. Fast enough to read as direct rather than animated.
+ * Press feedback. Responds on pointer-down: the fill steps darker on the
+ * instant of contact. No scale, no bounce — this system does not inflate
+ * controls to prove it is alive.
  */
-export const PRESS = 'active:scale-[0.985] motion-reduce:active:scale-100';
+export const PRESS =
+  'transition-colors duration-[var(--duration-instant)] ease-[var(--ease-ink)] active:brightness-90';
 
-/**
- * Press feedback for text-style controls. A scale would shift adjacent
- * inline text, so these dim instead. Opacity is compositor-only.
- */
+/** Press feedback for text controls. Opacity only, so it never shifts type. */
 export const PRESS_TEXT =
-  'transition-[color,background-color,opacity] duration-[var(--duration-press)] ease-apple active:opacity-60';
+  'transition-[color,background-color,opacity] duration-[var(--duration-instant)] ease-[var(--ease-ink)] active:opacity-60';

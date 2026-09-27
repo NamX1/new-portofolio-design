@@ -5,27 +5,29 @@ export default function Thinking() {
     <section
       id="thinking"
       aria-labelledby="thinking-heading"
-      className="bg-white py-section md:py-section-md lg:py-section-lg"
+      className="bg-paper py-section md:py-section-md lg:py-section-lg"
     >
       <div className="mx-auto w-full max-w-shell px-gutter sm:px-gutter-sm lg:px-gutter-lg">
         <h2
           id="thinking-heading"
-          className="max-w-2xl text-heading font-semibold tracking-tight text-ink"
+          className="max-w-2xl text-statement font-semibold tracking-statement text-ink"
         >
           {thinking.heading}
         </h2>
 
+        {/* Unpublished writing. Listed as a bibliography, not dressed as posts. */}
         <ul className="mt-14 border-t border-rule md:mt-20">
-          {thinking.entries.map((entry) => (
+          {thinking.entries.map((entry, index) => (
             <li
               key={entry.title}
-              className="grid gap-3 border-b border-rule py-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-baseline md:gap-12"
+              className="grid gap-4 border-b border-rule py-8 md:grid-cols-12 md:gap-8"
             >
-              <div className="max-w-prose">
-                <h3 className="text-card font-semibold tracking-snug text-ink">{entry.title}</h3>
-                <p className="mt-2 text-body text-ink-secondary">{entry.summary}</p>
-              </div>
-              <p className="text-micro font-semibold tracking-eyebrow text-ink-secondary uppercase md:justify-self-end">
+              <span className="font-mono text-data tracking-data text-ink-3 md:col-span-1">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3 className="text-sub font-semibold text-ink md:col-span-5">{entry.title}</h3>
+              <p className="text-body text-ink-2 md:col-span-4">{entry.summary}</p>
+              <p className="font-mono text-data tracking-data text-ink-3 uppercase md:col-span-2 md:text-right">
                 {entry.status}
               </p>
             </li>

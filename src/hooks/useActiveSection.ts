@@ -4,7 +4,7 @@ import { navItems } from '../data/content';
 import type { SectionId } from '../types/content';
 
 /* ---------------------------------------------------------------------------
-   Tuning constants
+   Tuning
    ------------------------------------------------------------------------ */
 
 /** Shrinks the observation root to a band across the reading line. */
@@ -18,10 +18,6 @@ const SORT_WINDOW_MS = 120;
 
 /** Viewport fraction used when nothing is intersecting. */
 const FALLBACK_LINE = 0.45;
-
-/* ---------------------------------------------------------------------------
-   Provider — one observer, shared by every consumer.
-   ------------------------------------------------------------------------ */
 
 interface ActiveSectionValue {
   readonly activeId: SectionId | null;
@@ -40,26 +36,15 @@ export function ActiveSectionProvider({ children }: { children: ReactNode }) {
   return createElement(ActiveSectionContext.Provider, { value }, children);
 }
 
-/** Read the currently highlighted section. Throws if used outside the provider. */
+/** Read the section currently being read. Throws outside the provider. */
 export function useActiveSectionId(): SectionId | null {
   const context = useContext(ActiveSectionContext);
-
   if (context === null) {
     throw new Error('useActiveSectionId must be used inside <ActiveSectionProvider>.');
   }
-
   return context.activeId;
 }
 
-/* ---------------------------------------------------------------------------
-   Observation
-   ------------------------------------------------------------------------ */
-
-/**
- * Tracks which of the given sections is currently the one being read.
- * Entries are ranked by intersection ratio, so a short section cannot steal
- * the highlight from a long one it merely overlaps.
- */
 export function useActiveSection(ids: readonly SectionId[]): SectionId | null {
   const [activeId, setActiveId] = useState<SectionId | null>(null);
   const ratios = useRef(new Map<SectionId, number>());
@@ -114,9 +99,6 @@ function pickActive(ratios: Map<SectionId, number>, ids: readonly SectionId[]): 
 
   if (best !== null) return best;
 
-  // Nothing intersects the band — attribute to the last section that has
-  // already scrolled past the reading line. Above the first section (the hero)
-  // nothing is active yet, which is the honest answer.
   const line = window.innerHeight * FALLBACK_LINE;
   let candidate: SectionId | null = null;
 

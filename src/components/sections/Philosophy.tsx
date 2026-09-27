@@ -1,29 +1,30 @@
 import { philosophy } from '../../data/content';
 
 /**
- * The one full-bleed black section. It earns the page's single dramatic
- * ground change by carrying the only long-form statement on the site.
+ * The one dark ground on the site. It earns the change by carrying the only
+ * long-form statement, and it is set large enough to be felt rather than read.
  */
 export default function Philosophy() {
   return (
     <section
       id="philosophy"
       aria-labelledby="philosophy-heading"
-      className="bg-black py-section md:py-section-md lg:py-section-lg"
+      className="bg-ink-ground py-section text-on-ink md:py-section-md lg:py-section-lg"
     >
-      <div className="mx-auto w-full max-w-4xl px-gutter text-center sm:px-gutter-sm lg:px-gutter-lg">
+      <div className="mx-auto w-full max-w-shell px-gutter sm:px-gutter-sm lg:px-gutter-lg">
+        <p className="font-mono text-data tracking-data text-vermilion-hot uppercase">
+          Philosophy
+        </p>
+
         <h2
           id="philosophy-heading"
-          className="text-statement font-medium tracking-tight text-balance text-ink-dark"
+          className="mt-8 max-w-[24ch] text-statement font-semibold tracking-statement text-on-ink lg:mt-12"
         >
           {philosophy.quote}
         </h2>
-        <p className="mt-10 text-body text-ink-dark-secondary">
-          <span className="font-semibold text-ink-dark">{philosophy.signatureName}</span>
-          <span aria-hidden="true" className="px-2 text-ink-dark-tertiary">
-            /
-          </span>
-          {philosophy.signatureMeta}
+
+        <p className="mt-12 border-t border-rule-ink pt-6 text-body text-on-ink-2 lg:mt-16">
+          {philosophy.attribution}
         </p>
       </div>
     </section>

@@ -1,110 +1,115 @@
 /**
- * Shape of src/data/content.ts. Every string on the page is described here.
+ * Shape of src/data/content.ts.
+ *
+ * The Ledger and Practice Map are both generated from these entries, so the
+ * site gets better as real work is added rather than needing a redesign.
+ * Nothing here may claim shipped work that does not exist: `status` exists so
+ * that honesty is structural rather than a matter of remembering.
  */
 
 export type SectionId =
-  | 'about'
-  | 'work'
-  | 'capabilities'
+  | 'introduction'
+  | 'build'
+  | 'ledger'
   | 'thinking'
   | 'philosophy'
+  | 'now'
   | 'contact';
 
+/** The three fields the whole site is organised around. */
+export type Domain = 'code' | 'ai' | 'business';
+
+export type WorkStatus = 'concept' | 'building' | 'shipped';
+
 export interface NavItem {
-  /** Section id — also the DOM id and the scroll-spy key. */
   readonly id: SectionId;
   readonly label: string;
 }
 
 export interface HeroContent {
-  readonly eyebrow: string;
-  readonly headline: string;
-  /** Second line of the headline, set as its own display line. */
-  readonly headlineAccent: string;
-  readonly body: string;
+  readonly name: string;
+  readonly statement: string;
+  /** Small factual lines. Nothing here may be invented. */
+  readonly meta: readonly { readonly label: string; readonly value: string }[];
   readonly primaryActionLabel: string;
   readonly secondaryActionLabel: string;
-  /** Caption for the product visual under the hero. */
-  readonly visualCaption: string;
+  readonly secondaryHref: string;
 }
 
-export interface PortraitContent {
-  readonly src: string;
-  readonly alt: string;
-  readonly width: number;
-  readonly height: number;
-  /** Honest label, so the placeholder is never mistaken for a real photo. */
-  readonly placeholderLabel: string;
-}
-
-export interface AboutContent {
+export interface IntroductionContent {
   readonly heading: string;
   readonly paragraphs: readonly string[];
-  readonly portrait: PortraitContent;
-}
-
-export type ProjectStatus = 'CONCEPT' | 'IN PROGRESS';
-
-/** Which schematic the concept visual draws. */
-export type ConceptVisual = 'landing' | 'workflow';
-
-export interface ProjectAction {
-  readonly label: string;
-  /**
-   * Placeholder actions carry no destination and are rendered disabled.
-   * Real actions would carry an href.
-   */
-  readonly href?: string;
-  readonly available: boolean;
-}
-
-export interface ProjectContent {
-  readonly title: string;
-  readonly description: string;
-  readonly status: ProjectStatus;
-  readonly visual: ConceptVisual;
-  /** Short factual metadata. Never a metric. */
-  readonly meta: readonly string[];
-  readonly actions: readonly ProjectAction[];
-}
-
-export interface WorkContent {
-  readonly heading: string;
-  readonly subheading: string;
-  readonly projects: readonly ProjectContent[];
-  readonly footnote: string;
+  readonly portrait: {
+    readonly src: string;
+    readonly alt: string;
+    readonly width: number;
+    readonly height: number;
+    readonly caption: string;
+  };
 }
 
 export interface CapabilityContent {
   readonly title: string;
   readonly description: string;
+  /** Fields this capability draws on. Positions it on the Practice Map. */
+  readonly domains: readonly Domain[];
 }
 
-export interface CapabilitiesContent {
+export interface BuildContent {
   readonly heading: string;
   readonly intro: string;
   readonly capabilities: readonly CapabilityContent[];
+  readonly mapHeading: string;
+  readonly mapCaption: string;
   readonly toolsLabel: string;
   readonly tools: readonly string[];
 }
 
-export type DraftStatus = 'DRAFT IDEA' | 'COMING SOON';
-
-export interface ThinkingEntry {
+/** One record in the archive. */
+export interface LedgerEntry {
+  readonly id: string;
   readonly title: string;
   readonly summary: string;
-  readonly status: DraftStatus;
+  readonly status: WorkStatus;
+  /** Real data: a year, a range, or "Now". */
+  readonly period: string;
+  readonly kind: string;
+  readonly domains: readonly Domain[];
+  /** Ids this entry connects to. Drawn as links on the Practice Map. */
+  readonly links: readonly string[];
+}
+
+export interface LedgerContent {
+  readonly heading: string;
+  readonly intro: string;
+  readonly entries: readonly LedgerEntry[];
+  readonly footnote: string;
+}
+
+export type IdeaStatus = 'DRAFT IDEA' | 'COMING SOON';
+
+export interface IdeaEntry {
+  readonly title: string;
+  readonly summary: string;
+  readonly status: IdeaStatus;
 }
 
 export interface ThinkingContent {
   readonly heading: string;
-  readonly entries: readonly ThinkingEntry[];
+  readonly entries: readonly IdeaEntry[];
 }
 
 export interface PhilosophyContent {
   readonly quote: string;
-  readonly signatureName: string;
-  readonly signatureMeta: string;
+  readonly attribution: string;
+}
+
+export interface NowContent {
+  readonly heading: string;
+  readonly intro: string;
+  /** Ids of Ledger entries that are live right now. */
+  readonly activeIds: readonly string[];
+  readonly closing: string;
 }
 
 export interface ContactContent {
@@ -132,7 +137,7 @@ export interface FooterContent {
 
 export interface BrandContent {
   readonly name: string;
-  readonly short: string;
+  readonly tagline: string;
 }
 
 export interface UiStrings {
@@ -142,6 +147,8 @@ export interface UiStrings {
   readonly closeMenu: string;
   readonly backToTop: string;
   readonly contactAction: string;
-  readonly unavailable: string;
-  readonly visualLabel: string;
+  readonly statusConcept: string;
+  readonly statusBuilding: string;
+  readonly statusShipped: string;
+  readonly mapLabel: string;
 }

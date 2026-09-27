@@ -2,13 +2,9 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { cn, PRESS } from '../../lib/utils';
 
 /* ---------------------------------------------------------------------------
-   The site's one button. Apple's pill: solid accent, light label, and press
-   feedback that responds on pointer-down by stepping the fill darker with a
-   whisper of scale. 100ms, no overshoot.
-
-   Deliberately single-purpose. An earlier draft carried four variants and a
-   link branch that nothing used; text-navigation actions belong to
-   ChevronLink, which is the pattern Apple actually uses beside a pill.
+   The solid action. A sharp-cornered rectangle, not a pill: this system
+   separates with hairlines and lets type carry the weight, so controls stay
+   plain. One solid vermilion action per view is the entire budget.
    ------------------------------------------------------------------------ */
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> {
   readonly children: ReactNode;
@@ -16,10 +12,8 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
 }
 
 const BASE_CLASSES = cn(
-  'inline-flex select-none items-center justify-center gap-2',
-  'min-h-11 rounded-full bg-accent px-6 text-body text-on-accent',
-  'transition-[transform,background-color] duration-[var(--duration-press)] ease-apple',
-  'hover:bg-accent-hover',
+  'inline-flex select-none items-center justify-center',
+  'min-h-11 rounded-[3px] bg-vermilion-deep px-7 py-3 text-body text-paper',
   PRESS,
   'disabled:pointer-events-none disabled:opacity-45',
 );

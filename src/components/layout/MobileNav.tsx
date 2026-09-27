@@ -7,19 +7,18 @@ import type { SectionId } from '../../types/content';
 import { cn, PRESS_TEXT } from '../../lib/utils';
 
 /* ---------------------------------------------------------------------------
-   Plain CSS transitions here, not a spring library. The sheet is not
-   gesture-driven, and mirrored easing means the return path matches the
-   arrival path. transform and opacity only.
+   Plain CSS transitions. The sheet is not gesture-driven, and the easing is
+   symmetric so the return path matches the arrival path.
    ------------------------------------------------------------------------ */
 const SHEET_PANEL = cn(
-  'transition-[transform,opacity] duration-[var(--duration-calm)] ease-apple',
+  'transition-[transform,opacity] duration-[var(--duration-slow)] ease-[var(--ease-ink)]',
   'data-[open=true]:pointer-events-auto data-[open=true]:translate-y-0 data-[open=true]:opacity-100',
   'data-[open=false]:pointer-events-none data-[open=false]:translate-y-2 data-[open=false]:opacity-0',
   'motion-reduce:transition-opacity motion-reduce:data-[open=false]:translate-y-0',
 );
 
 const SHEET_SCRIM = cn(
-  'transition-opacity duration-[var(--duration-calm)] ease-apple',
+  'transition-opacity duration-[var(--duration-slow)] ease-[var(--ease-ink)]',
   'data-[open=true]:opacity-100 data-[open=false]:pointer-events-none data-[open=false]:opacity-0',
 );
 
@@ -84,25 +83,21 @@ export default function MobileNav({ onContact }: MobileNavProps) {
         aria-label={isOpen ? ui.closeMenu : ui.openMenu}
         onClick={() => setIsOpen((open) => !open)}
         className={cn(
-          'inline-flex h-11 w-11 items-center justify-center rounded-full text-ink hover:bg-canvas',
+          'inline-flex h-11 w-11 items-center justify-center text-ink hover:bg-paper-deep lg:hidden',
           PRESS_TEXT,
-          'md:hidden',
         )}
       >
-        <span aria-hidden="true" className="flex w-4 flex-col gap-1.5">
+        <span aria-hidden="true" className="flex w-5 flex-col gap-1.5">
           <span className="h-px w-full bg-current" />
           <span className="h-px w-full bg-current" />
         </span>
       </button>
 
-      {/* Portalled out of the header. The header is itself a translucent
-          material, and a nested translucent surface can never resolve its
-          own backdrop. */}
       {createPortal(
         <div
           data-open={isOpen}
           onClick={close}
-          className={cn('fixed inset-0 z-50 bg-scrim md:hidden', SHEET_SCRIM)}
+          className={cn('fixed inset-0 z-50 bg-scrim lg:hidden', SHEET_SCRIM)}
         >
           <div
             id="mobile-nav"
@@ -115,8 +110,7 @@ export default function MobileNav({ onContact }: MobileNavProps) {
             inert={!isOpen}
             onClick={(event) => event.stopPropagation()}
             className={cn(
-              'absolute inset-x-0 top-0 rounded-b-2xl bg-white px-gutter pb-8 pt-3 sm:px-gutter-sm',
-              'backdrop-blur-[32px] backdrop-saturate-[180%]',
+              'absolute inset-x-0 top-0 border-b border-rule bg-paper px-gutter pt-2 pb-8',
               SHEET_PANEL,
             )}
           >
@@ -126,7 +120,7 @@ export default function MobileNav({ onContact }: MobileNavProps) {
                 onClick={close}
                 aria-label={ui.closeMenu}
                 className={cn(
-                  'inline-flex h-11 w-11 items-center justify-center rounded-full text-ink hover:bg-canvas',
+                  'inline-flex h-11 w-11 items-center justify-center text-ink hover:bg-paper-deep',
                   PRESS_TEXT,
                 )}
               >
@@ -148,7 +142,7 @@ export default function MobileNav({ onContact }: MobileNavProps) {
             </ul>
 
             <Button
-              className="mt-6 w-full"
+              className="mt-8 w-full"
               onClick={() => {
                 close();
                 onContact();
@@ -181,9 +175,9 @@ function MobileNavLink({ id, label, onSelect }: MobileNavLinkProps) {
         aria-current={isActive ? 'true' : undefined}
         onClick={onSelect}
         className={cn(
-          'flex min-h-14 items-center text-lede tracking-normal hover:text-ink',
+          'flex min-h-14 items-center text-sub hover:text-ink',
           PRESS_TEXT,
-          isActive ? 'font-semibold text-ink' : 'text-ink-secondary',
+          isActive ? 'font-semibold text-ink' : 'text-ink-2',
         )}
       >
         {label}

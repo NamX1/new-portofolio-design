@@ -2,11 +2,12 @@ import { useCallback, useState } from 'react';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Hero from './components/sections/Hero';
-import About from './components/sections/About';
-import Work from './components/sections/Work';
-import Capabilities from './components/sections/Capabilities';
+import Introduction from './components/sections/Introduction';
+import Build from './components/sections/Build';
+import Ledger from './components/sections/Ledger';
 import Thinking from './components/sections/Thinking';
 import Philosophy from './components/sections/Philosophy';
+import Now from './components/sections/Now';
 import Contact from './components/sections/Contact';
 import ContactModal from './components/ui/ContactModal';
 import { ActiveSectionProvider } from './hooks/useActiveSection';
@@ -22,7 +23,7 @@ export default function App() {
     <ActiveSectionProvider>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-50 focus:rounded-full focus:bg-accent focus:px-5 focus:py-3 focus:text-body focus:text-on-accent"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-[3px] focus:bg-vermilion-deep focus:px-5 focus:py-3 focus:text-body focus:text-paper"
       >
         {ui.skipToContent}
       </a>
@@ -31,11 +32,12 @@ export default function App() {
 
       <main id="main">
         <Hero onContact={openContact} />
-        <About />
-        <Work />
-        <Capabilities />
+        <Introduction />
+        <Build />
+        <Ledger />
         <Thinking />
         <Philosophy />
+        <Now />
         <Contact onContact={openContact} />
       </main>
 
