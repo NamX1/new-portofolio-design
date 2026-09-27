@@ -3,17 +3,15 @@ import { extendTailwindMerge } from 'tailwind-merge';
 
 /**
  * twMerge only knows Tailwind's stock theme. This project defines its own
- * scale in src/index.css, so an unregistered name like `text-data` would be
- * read as a text *colour* and silently deleted on collision. Registering the
- * real scale keeps conflict resolution honest.
+ * type scale in src/index.css, so an unregistered name like `text-quote` would
+ * be read as a text *colour* and silently deleted when it collided with one.
+ * Registering the real scale keeps conflict resolution honest.
  */
 const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
-      'font-size': [
-        { text: ['display', 'statement', 'heading', 'sub', 'body', 'small', 'data'] },
-      ],
-      tracking: [{ tracking: ['display', 'statement', 'heading', 'body', 'data'] }],
+      'font-size': [{ text: ['label', 'body', 'lede', 'heading', 'display', 'quote'] }],
+      tracking: [{ tracking: ['display', 'heading', 'body', 'label'] }],
     },
   },
 });
@@ -24,13 +22,15 @@ export function cn(...inputs: ClassValue[]): string {
 }
 
 /**
- * Press feedback. Responds on pointer-down: the fill steps darker on the
- * instant of contact. No scale, no bounce — this system does not inflate
- * controls to prove it is alive.
+ * Press feedback. Responds on pointer-down, not release: the fill steps
+ * darker on contact, with a small scale. 100ms, critically damped, no bounce.
  */
 export const PRESS =
-  'transition-colors duration-[var(--duration-instant)] ease-[var(--ease-ink)] active:brightness-90';
+  'transition-[transform,background-color,border-color] duration-[var(--duration-press)] ease-[var(--ease-instant)] active:scale-[0.97] motion-reduce:active:scale-100';
 
-/** Press feedback for text controls. Opacity only, so it never shifts type. */
+/**
+ * Press feedback for text controls. Opacity only, so it never shifts type and
+ * never reflows the line box.
+ */
 export const PRESS_TEXT =
-  'transition-[color,background-color,opacity] duration-[var(--duration-instant)] ease-[var(--ease-ink)] active:opacity-60';
+  'transition-[color,background-color,opacity] duration-[var(--duration-press)] ease-[var(--ease-instant)] active:opacity-65';

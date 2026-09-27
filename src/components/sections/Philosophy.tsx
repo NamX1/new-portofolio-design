@@ -1,31 +1,45 @@
+import Reveal from '../ui/Reveal';
 import { philosophy } from '../../data/content';
 
 /**
- * The one dark ground on the site. It earns the change by carrying the only
- * long-form statement, and it is set large enough to be felt rather than read.
+ * The one dark section, and the second of the two timothyronald.id moments.
+ * A large editorial pull-quote: oversized quotation mark in the accent, a
+ * generous leading, and a small signature line underneath.
  */
 export default function Philosophy() {
   return (
     <section
       id="philosophy"
       aria-labelledby="philosophy-heading"
-      className="bg-ink-ground py-section text-on-ink md:py-section-md lg:py-section-lg"
+      className="bg-night py-section text-ink-night md:py-section-md lg:py-section-lg"
     >
-      <div className="mx-auto w-full max-w-shell px-gutter sm:px-gutter-sm lg:px-gutter-lg">
-        <p className="font-mono text-data tracking-data text-vermilion-hot uppercase">
-          Philosophy
-        </p>
+      <div className="mx-auto w-full max-w-shell px-gutter md:px-gutter-md lg:px-gutter-lg">
+        <Reveal>
+          <figure className="mx-auto max-w-4xl">
+            <span
+              aria-hidden="true"
+              className="block font-display text-[5rem] leading-[0.6] text-accent-night select-none"
+            >
+              &ldquo;
+            </span>
 
-        <h2
-          id="philosophy-heading"
-          className="mt-8 max-w-[24ch] text-statement font-semibold tracking-statement text-on-ink lg:mt-12"
-        >
-          {philosophy.quote}
-        </h2>
+            <blockquote className="mt-2">
+              <h2
+                id="philosophy-heading"
+                className="text-quote font-medium text-balance text-ink-night"
+              >
+                {philosophy.quote}
+              </h2>
+            </blockquote>
 
-        <p className="mt-12 border-t border-rule-ink pt-6 text-body text-on-ink-2 lg:mt-16">
-          {philosophy.attribution}
-        </p>
+            <figcaption className="mt-10 flex items-center gap-3 text-label text-ink-night-secondary">
+              <span aria-hidden="true" className="h-px w-8 bg-rule-night" />
+              <span className="font-semibold text-ink-night">{philosophy.signatureName}</span>
+              <span aria-hidden="true">/</span>
+              <span>{philosophy.signatureMeta}</span>
+            </figcaption>
+          </figure>
+        </Reveal>
       </div>
     </section>
   );

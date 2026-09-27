@@ -1,28 +1,22 @@
 /* ============================================================================
    index.css — design tokens + global resets only. No component styles.
 
-   The visual language: a working record. Warm paper, warm black, one
-   vermilion. Hairlines instead of cards. Type does the work. Every value
-   below is contrast-verified against the ground it is used on.
+   Palette: cool neutrals (the Apple half) plus exactly one warm accent.
+   Every pairing below is commented with its computed WCAG ratio, measured
+   against the specific ground it is used on. Ratios are not carried forward
+   from any previous palette: the base colors changed, so they were recomputed.
    ========================================================================= */
 
 @import 'tailwindcss';
 
 /* ---------------------------------------------------------------------------
-   1. Type — a deliberate pairing, both self-hosted.
-   ------------------------------------------------------------------------ */
-@font-face {
-  font-family: 'Bricolage Grotesque';
-  font-style: normal;
-  font-weight: 200 800;
-  font-display: swap;
-  src: url('/fonts/bricolage-grotesque-var.woff2') format('woff2-variations');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
-    U+2212, U+2215, U+FEFF, U+FFFD;
-}
+   1. Type — two variable families, self-hosted, latin subset via unicode-range.
 
-/* Hanken Grotesk: humanist, warm, built for reading at length. */
+   Family 1 of 2 (text): Hanken Grotesk. Humanist, neutral, built for reading.
+   Family 2 of 2 (display): Source Serif 4, loaded ITALIC ONLY. It is used for
+   exactly one thing on this site — the hero's "Should Exist." — plus the
+   Philosophy pull-quote. It is never used upright anywhere.
+   ------------------------------------------------------------------------ */
 @font-face {
   font-family: 'Hanken Grotesk';
   font-style: normal;
@@ -34,103 +28,134 @@
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url('/fonts/source-serif-4-italic-var.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* ---------------------------------------------------------------------------
    2. Theme tokens
    ------------------------------------------------------------------------ */
 @theme {
-  /* — Grounds. Paper is warm, not white. The dark ground is warm black. — */
-  --color-paper: #f4f1e8; /* 15.9:1 with ink */
-  --color-paper-deep: #e9e4d6; /* the second paper value */
-  --color-paper-edge: #ded7c6; /* insets, diagram fills */
-  --color-ink-ground: #14110f; /* the one dark section */
+  /* — Grounds. Cool, not warm. — */
+  --color-paper: #f6f7f9; /* cool near-white */
+  --color-paper-alt: #eceef1; /* the second surface, for section shifts */
+  --color-night: #0b0d10; /* cool near-black, the one dark section */
 
-  /* — Ink on paper. Three steps, all clearing 4.5:1 on BOTH paper values. — */
-  --color-ink: #1a1613; /* 15.9:1 paper, 14.2:1 deep */
-  --color-ink-2: #554d43; /*  7.4:1 paper,  6.5:1 deep */
-  --color-ink-3: #6e6459; /*  5.1:1 paper,  4.6:1 deep */
+  /* — Ink on light grounds. Three steps, each clearing 4.5:1 on BOTH
+       paper values, so a label never fails when the ground shifts. — */
+  --color-ink: #0b0d10; /* 18.15:1 paper, 16.74:1 alt */
+  --color-ink-secondary: #3d434c; /* 9.30:1 paper, 8.58:1 alt */
+  --color-ink-tertiary: #565d67; /* 6.20:1 paper, 5.72:1 alt */
 
   /* — Ink on the dark ground. — */
-  --color-on-ink: #f4f1e8; /* 16.7:1 */
-  --color-on-ink-2: #b3a99a; /*  8.1:1 */
-  --color-on-ink-3: #9c9284; /*  6.1:1 */
+  --color-ink-night: #f6f7f9; /* 18.15:1 on night */
+  --color-ink-night-secondary: #b6bcc6; /* 10.19:1 on night */
 
-  /* — Vermilion. The identity colour. Used for marks, not for surfaces. — */
-  --color-vermilion: #b8390f; /* 5.1:1 paper, 4.6:1 deep; paper on it 5.1:1 */
-  --color-vermilion-deep: #a8330a; /* solid fills; paper on it 5.9:1 */
-  --color-vermilion-hot: #e2571f; /* 5.0:1 on the dark ground; large type */
-  --color-vermilion-wash: rgb(184 57 15 / 0.1);
+  /* — The single warm accent. No second accent exists in this system.
+       #9c4113 clears 4.5:1 as text on paper (6.16) and on paper-alt (5.40).
+       It is also used at 9% as a badge wash, which deepens the ground it sits
+       on: #a84a17 measured only 4.37:1 there and was rejected for that reason.
+       On the dark ground the same hue must lighten, so the accent has one
+       night step, #d4692c, at 5.43:1 on night. Same hue, two steps, because
+       one value cannot serve both grounds at AA. — */
+  --color-accent: #9c4113; /* 6.16:1 paper, 5.40:1 alt, 5.41:1 on its own wash */
+  --color-accent-night: #d4692c; /* 5.43:1 on night */
+  --color-accent-wash: rgb(156 65 19 / 0.09);
 
-  /* — Hairlines. The only separator this system uses. — */
-  --color-rule: rgb(26 22 19 / 0.14);
-  --color-rule-strong: rgb(26 22 19 / 0.32);
-  --color-rule-ink: rgb(244 241 232 / 0.18);
-  --color-scrim: rgb(20 17 15 / 0.55);
+  /* — Hairlines. The only separator used. — */
+  --color-rule: rgb(11 13 16 / 0.12);
+  --color-rule-strong: rgb(11 13 16 / 0.24);
+  --color-rule-night: rgb(246 247 249 / 0.16);
+  --color-scrim: rgb(11 13 16 / 0.44);
+
+  /* — Translucent material, for the header and the modal only. These solve a
+       real layering problem: content scrolls beneath the chrome. — */
+  --color-material: rgb(246 247 249 / 0.72);
+  --color-material-night: rgb(11 13 16 / 0.72);
+  --color-material-border: rgb(246 247 249 / 0.7);
 
   /* — Families. — */
-  --font-display: 'Bricolage Grotesque', 'Hanken Grotesk', system-ui, sans-serif;
   --font-sans: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  /* Mono is used only where it carries real data: dates, counts, versions. */
-  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+  --font-display: 'Source Serif 4', 'Hanken Grotesk', system-ui, sans-serif;
 
-  /* — Scale. Tracking is size-specific. Large type is allowed to be excessive. — */
-  --text-display: clamp(3.25rem, 12.5vw, 10.5rem); /* the name */
-  --text-display--line-height: 0.84;
-  --text-statement: clamp(2rem, 5.6vw, 4rem);
-  --text-statement--line-height: 1.02;
-  --text-heading: clamp(1.5rem, 3vw, 2.125rem);
-  --text-heading--line-height: 1.14;
-  --text-sub: clamp(1.125rem, 1.5vw, 1.3125rem);
-  --text-sub--line-height: 1.45;
-  --text-body: 1.0625rem;
+  /* — Type scale. Fiasco discipline: FEWER steps, each a decisive jump.
+       Four sizes carry the whole page, and each heading level is clearly
+       larger and heavier than the one below it. — */
+  --text-label: 0.8125rem; /* 13px — controls, labels, meta */
+  --text-label--line-height: 1.4;
+  --text-body: 1.0625rem; /* 17px — body copy, never below 16px */
   --text-body--line-height: 1.6;
-  --text-small: 0.875rem;
-  --text-small--line-height: 1.5;
-  --text-data: 0.75rem; /* mono, real data only */
-  --text-data--line-height: 1.2;
+  --text-lede: clamp(1.1875rem, 1.7vw, 1.4375rem); /* 19–23px — section intros */
+  --text-lede--line-height: 1.45;
+  --text-heading: clamp(1.875rem, 3.6vw, 2.75rem); /* section headings */
+  --text-heading--line-height: 1.12;
+  --text-display: clamp(2.75rem, 7vw, 5.25rem); /* the hero only */
+  --text-display--line-height: 1.04;
+  --text-quote: clamp(1.5rem, 2.9vw, 2.5rem); /* the pull-quote */
+  --text-quote--line-height: 1.35;
 
-  --tracking-display: -0.035em;
-  --tracking-statement: -0.03em;
-  --tracking-heading: -0.02em;
-  --tracking-body: 0em;
-  --tracking-data: 0.01em;
+  /* — Tracking. Size-specific: negative on large display, near-zero on body,
+       positive only on short all-caps labels. Never one value for all. — */
+  --tracking-display: -0.03em; /* large display */
+  --tracking-heading: -0.02em; /* section headings */
+  --tracking-body: 0em; /* body copy */
+  --tracking-label: 0.06em; /* short all-caps labels only */
 
-  --container-shell: 82rem;
-  --container-prose: 66ch;
-  --container-measure: 34rem; /* the narrow editorial column */
+  --container-shell: 72rem;
+  --container-prose: 68ch; /* 65–75 characters */
 
-  /* — Spacing. — */
-  --spacing-section: 5.5rem;
-  --spacing-section-md: 8rem;
-  --spacing-section-lg: 10.5rem;
-  --spacing-gutter: 1.25rem;
-  --spacing-gutter-sm: 2.5rem;
-  --spacing-gutter-lg: 3.5rem;
+  /* — Spacing. Sections breathe at 100px+. — */
+  --spacing-section: 6.5rem; /* 104px */
+  --spacing-section-md: 8.5rem; /* 136px */
+  --spacing-section-lg: 10.5rem; /* 168px */
+  --spacing-gutter: 1.5rem; /* 24px */
+  --spacing-gutter-md: 2.5rem; /* 40px */
+  --spacing-gutter-lg: 3.5rem; /* 56px */
 
-  /* — Easing. Authored, not borrowed. — */
-  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1); /* the default: slow out */
-  --ease-ink: cubic-bezier(0.65, 0, 0.35, 1); /* symmetric, for reversible */
-
-  /* — The name rises out of a mask. It is offset, never hidden. — */
-  @keyframes hero-rise {
-    from {
-      transform: translateY(0.4em);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
+  /* — Easing. Mirrored pair: the return path matches the arrival path. — */
+  --ease-settle: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-instant: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 :root {
   color-scheme: light;
 
-  --duration-instant: 90ms; /* press feedback */
-  --duration-quick: 180ms;
-  --duration-slow: 620ms;
-  --duration-mask: 900ms; /* the hero type mask */
+  /* Motion. Values are named here and referenced, never inlined. */
+  --duration-press: 100ms; /* pointer-down feedback, the fastest thing here */
+  --duration-snap: 160ms;
+  --duration-calm: 320ms;
+  --duration-sheet: 360ms;
 
   --header-h: 3.5rem;
-  --rule-w: 1px;
+  --blur-material: 20px;
+  --saturate-material: 180%;
+
+  /* Ambient glow behind the hero headline. Soft, slow, low opacity. */
+  --glow-image: radial-gradient(
+    62% 48% at 50% 34%,
+    rgb(11 13 16 / 0.055),
+    rgb(11 13 16 / 0) 72%
+  );
+
+  /* The glow arrives once. It does not loop: a slow oscillation is exactly
+     the kind of ambient motion that becomes a distraction. */
+  --duration-glow: 1400ms;
+}
+
+@keyframes glow-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -151,7 +176,8 @@
 
   html {
     -webkit-text-size-adjust: 100%;
-    scroll-behavior: smooth;
+    /* Lenis drives scrolling; native smooth would fight it. */
+    scroll-behavior: auto;
   }
 
   body {
@@ -163,13 +189,11 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
   }
 
   h1,
   h2,
   h3,
-  h4,
   p,
   figure,
   blockquote,
@@ -178,6 +202,9 @@
     margin: 0;
   }
 
+  /* Lists are unstyled, not unannounced. Stripping the markers drops the
+     list semantics in Safari and VoiceOver, so role="list" is restored
+     here once, globally, rather than on every list in the app. */
   ul,
   ol {
     margin: 0;
@@ -207,26 +234,28 @@
     text-decoration: none;
   }
 
+  /* Headings balance their lines. Body copy must not. */
   h1,
   h2,
   h3 {
     text-wrap: balance;
-    font-family: var(--font-display);
     font-weight: 600;
+    letter-spacing: var(--tracking-heading);
   }
 
   [id] {
     scroll-margin-top: var(--header-h);
   }
 
-  /* — Browser surfaces, themed from this palette. — */
+  /* — Browser surfaces, themed from this palette. */
   :focus-visible {
-    outline: 2px solid var(--color-vermilion);
+    outline: 2px solid var(--color-accent);
     outline-offset: 3px;
+    border-radius: 3px;
   }
 
   ::selection {
-    background-color: var(--color-vermilion);
+    background-color: var(--color-accent);
     color: var(--color-paper);
   }
 
@@ -234,50 +263,53 @@
     width: 11px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-paper-deep);
+    background: var(--color-paper-alt);
   }
   ::-webkit-scrollbar-thumb {
     background: var(--color-rule-strong);
-    border: 3px solid var(--color-paper-deep);
+    border: 3px solid var(--color-paper-alt);
     background-clip: padding-box;
+    border-radius: 999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-ink-3);
+    background: var(--color-ink-tertiary);
   }
 }
 
 /* ---------------------------------------------------------------------------
-   4. Reduced transparency, contrast, motion.
+   4. Accessibility preferences. All three are honoured independently.
    ------------------------------------------------------------------------ */
+
+/* Translucent materials are solving a real layering problem, but if the user
+   has asked for less transparency they become solid. */
 @media (prefers-reduced-transparency: reduce) {
   :root {
-    --color-material: #f4f1e8;
+    --color-material: #f6f7f9;
+    --color-material-night: #0b0d10;
+    --color-material-border: var(--color-rule);
   }
 }
 
 @media (prefers-contrast: more) {
   :root {
+    --color-ink-tertiary: var(--color-ink-secondary);
     --color-rule: var(--color-rule-strong);
-    --color-ink-2: var(--color-ink);
-    --color-ink-3: var(--color-ink-2);
-    --color-vermilion: var(--color-vermilion-deep);
+    --color-accent: #8f3d11;
   }
 }
 
+/* Reduced motion is a gentler equivalent, not no feedback. Scroll-linked
+   motion is disabled in JS (SmoothScroll never constructs Lenis), and here
+   anything that moved through space becomes a plain cross-fade. */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   *,
   *::before,
   *::after {
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 140ms !important;
+    transition-duration: 150ms !important;
   }
 
-  /* Anything that moved through space now simply cross-fades. */
   [data-motion='transform'] {
     transform: none !important;
   }

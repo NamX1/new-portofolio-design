@@ -1,25 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Portrait placeholder">
   <defs>
-    <linearGradient id="warm" x1="0" y1="0" x2="0.5" y2="1">
-      <stop offset="0" stop-color="#eee9db" />
-      <stop offset="1" stop-color="#e2dbc8" />
+    <linearGradient id="field" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#f2f4f7" />
+      <stop offset="1" stop-color="#e3e7ec" />
     </linearGradient>
   </defs>
 
-  <rect width="800" height="1000" fill="url(#warm)" />
+  <rect width="800" height="1000" fill="url(#field)" />
 
-  <!-- Field marks rather than a figure. This is a placeholder and must never
-       be mistaken for a photograph of a person. -->
-  <g stroke="#b8ae97" fill="none" stroke-width="1">
-    <line x1="0" y1="250" x2="800" y2="250" />
-    <line x1="0" y1="500" x2="800" y2="500" />
-    <line x1="0" y1="750" x2="800" y2="750" />
+  <!-- Abstract construction, not a figure. This is a placeholder and must
+       never be mistaken for a photograph of a person. -->
+  <g fill="none" stroke="#c4cad3" stroke-width="1">
+    <circle cx="400" cy="440" r="268" />
+    <circle cx="400" cy="440" r="188" stroke-width="6" />
+    <circle cx="400" cy="440" r="108" />
+    <line x1="0" y1="440" x2="800" y2="440" />
     <line x1="400" y1="0" x2="400" y2="1000" />
   </g>
 
-  <g fill="#b8ae97">
-    <rect x="250" y="400" width="300" height="200" />
-  </g>
-
-  <rect x="386" y="486" width="28" height="28" fill="#b8390f" />
+  <circle cx="400" cy="440" r="9" fill="#9c4113" />
 </svg>

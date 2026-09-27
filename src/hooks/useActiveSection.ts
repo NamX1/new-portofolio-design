@@ -4,19 +4,19 @@ import { navItems } from '../data/content';
 import type { SectionId } from '../types/content';
 
 /* ---------------------------------------------------------------------------
-   Tuning
+   Tuning. Named here rather than inlined at the call site.
    ------------------------------------------------------------------------ */
 
 /** Shrinks the observation root to a band across the reading line. */
 const OBSERVER_OPTIONS: IntersectionObserverInit = {
-  rootMargin: '-30% 0px -45% 0px',
+  rootMargin: '-28% 0px -48% 0px',
   threshold: [0, 0.25, 0.5, 0.75, 1],
 };
 
 /** Short window that keeps the choice stable when two sections share the band. */
 const SORT_WINDOW_MS = 120;
 
-/** Viewport fraction used when nothing is intersecting. */
+/** Viewport fraction used to attribute a section when nothing intersects. */
 const FALLBACK_LINE = 0.45;
 
 interface ActiveSectionValue {
@@ -28,11 +28,16 @@ const ActiveSectionContext = createContext<ActiveSectionValue | null>(null);
 /** Nav order, as section ids. */
 const SECTION_IDS: readonly SectionId[] = navItems.map((item) => item.id);
 
+/**
+ * Provides the currently-read section to every consumer, from one observer.
+ * The context exists so Header and MobileNav share a single observer rather
+ * than each attaching their own.
+ */
 export function ActiveSectionProvider({ children }: { children: ReactNode }) {
   const activeId = useActiveSection(SECTION_IDS);
   const value = useMemo<ActiveSectionValue>(() => ({ activeId }), [activeId]);
 
-  // createElement keeps this module free of JSX so it stays a .ts file.
+  // createElement keeps this module JSX-free so it can stay a .ts file.
   return createElement(ActiveSectionContext.Provider, { value }, children);
 }
 
@@ -45,6 +50,11 @@ export function useActiveSectionId(): SectionId | null {
   return context.activeId;
 }
 
+/**
+ * Tracks which of the given sections is being read, by intersection ratio so
+ * a short section cannot steal the highlight from a long one it overlaps.
+ * Returns null above the first section, which is the honest answer.
+ */
 export function useActiveSection(ids: readonly SectionId[]): SectionId | null {
   const [activeId, setActiveId] = useState<SectionId | null>(null);
   const ratios = useRef(new Map<SectionId, number>());
@@ -99,6 +109,8 @@ function pickActive(ratios: Map<SectionId, number>, ids: readonly SectionId[]): 
 
   if (best !== null) return best;
 
+  // Nothing intersects the band: attribute to the last section already past
+  // the reading line. Above the first section nothing is active.
   const line = window.innerHeight * FALLBACK_LINE;
   let candidate: SectionId | null = null;
 

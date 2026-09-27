@@ -1,32 +1,34 @@
 import type {
+  AboutContent,
   BrandContent,
-  BuildContent,
-  CapabilityContent,
+  CapabilitiesContent,
   ContactContent,
   ContactModalContent,
-  Domain,
+  FooterColumn,
   FooterContent,
   HeroContent,
-  IdeaEntry,
-  IntroductionContent,
-  LedgerContent,
-  LedgerEntry,
   NavItem,
-  NowContent,
   PhilosophyContent,
+  ProjectContent,
   ThinkingContent,
+  ThinkingEntry,
   UiStrings,
+  WorkContent,
 } from '../types/content';
 
 /* ---------------------------------------------------------------------------
-   Copy is written to be specific and human. No superlatives, no
-   "passionate developer", no invented employers, clients, or results.
-   Where a fact is not known it is left out rather than filled in.
+   Every user-visible string on the site. Nothing is hardcoded in JSX.
+
+   The portfolio, contact, and concept copy is fixed by the brief and is
+   reproduced exactly. Three slots were specified by shape rather than by
+   text — the contact line, the two capability one-liners, and the three
+   thinking entries — and are written here in the same plain, non-marketing
+   register as the rest.
    ------------------------------------------------------------------------ */
 
 export const brand: BrandContent = {
   name: 'Kevin Charlie',
-  tagline: 'Building what should exist.',
+  tagline: 'Building What Should Exist.',
 };
 
 export const ui: UiStrings = {
@@ -34,84 +36,86 @@ export const ui: UiStrings = {
   navLabel: 'Primary',
   openMenu: 'Open menu',
   closeMenu: 'Close menu',
-  backToTop: 'Back to top',
   contactAction: 'Contact Me',
-  statusConcept: 'Concept',
-  statusBuilding: 'In progress',
-  statusShipped: 'Shipped',
-  mapLabel: 'Practice map',
+  backToTop: 'Back to top',
+  unavailable: 'Not available yet',
+  visualLabel: 'Concept visual',
 };
 
 export const navItems: readonly NavItem[] = [
-  { id: 'introduction', label: 'Introduction' },
-  { id: 'build', label: 'What I Build' },
-  { id: 'ledger', label: 'Ledger' },
+  { id: 'about', label: 'About' },
+  { id: 'work', label: 'Work' },
+  { id: 'capabilities', label: 'Capabilities' },
   { id: 'thinking', label: 'Thinking' },
   { id: 'philosophy', label: 'Philosophy' },
-  { id: 'now', label: 'Now' },
+  { id: 'contact', label: 'Contact' },
 ];
 
 export const hero: HeroContent = {
-  name: 'Kevin Charlie',
-  statement: 'I turn half-formed ideas into things that are actually useful.',
-  meta: [
-    { label: 'Builds', value: 'Interfaces, tools, systems' },
-    { label: 'Works across', value: 'Code, AI, business' },
-    { label: 'Practice', value: 'Find the real problem, then build it' },
-    { label: 'Status', value: 'Building, in public' },
-  ],
+  eyebrow: 'CODE × AI × BUSINESS',
+  headlineLead: 'Building What',
+  headlineAccent: 'Should Exist.',
+  body: 'I turn ideas into useful things, bringing code, AI, and business thinking together to solve the right problems.',
   primaryActionLabel: 'Contact Me',
-  secondaryActionLabel: 'Read the ledger',
-  secondaryHref: '#ledger',
+  secondaryActionLabel: 'Explore Work',
+  secondaryActionHref: '#work',
 };
 
-export const introduction: IntroductionContent = {
-  heading: 'A builder, working out loud.',
+export const about: AboutContent = {
+  heading: 'Curious by nature. Intentional by design.',
   paragraphs: [
-    'Most of what I build starts as a disagreement. Someone describes a problem, and the description is wrong in a way nobody has noticed yet. Getting to the version that is actually true is most of the work.',
-    'I am interested in the seam where code, AI, and business meet, because that is where most ideas quietly fail. Code without a decision about what to build produces the wrong thing, efficiently. I want to be the person who makes the decision first.',
-    'This site is a record rather than a pitch. What is here is what exists; what is coming is marked as coming.',
+    "I'm Kevin Charlie, a builder interested in the space where code, AI, and business meet.",
+    'I care about understanding the real problem, making thoughtful decisions, and creating things that are genuinely useful. The best ideas deserve more than just execution. They deserve clarity, care, and a reason to exist.',
   ],
   portrait: {
     src: '/portrait-placeholder.svg',
     alt: 'Portrait placeholder',
     width: 800,
     height: 1000,
-    caption: 'Portrait pending',
+    caption: 'Portrait to come',
   },
 };
 
-/* Outcomes first. Domains position each one on the Practice Map. */
-const capabilities: readonly CapabilityContent[] = [
+const projects: readonly ProjectContent[] = [
   {
-    title: 'Make it tangible',
+    title: 'Business Landing Page System',
     description:
-      'Turn something argued about in the abstract into something you can click, use, and be wrong about.',
-    domains: ['code', 'business'],
+      'A flexible direction for turning a business idea into a clear, useful digital first impression.',
+    status: 'CONCEPT',
   },
   {
-    title: 'Find the leverage',
-    description:
-      'Locate the one change that moves the outcome, instead of the ten that make it look like effort.',
-    domains: ['ai', 'business'],
-  },
-  {
-    title: 'Join the disciplines',
-    description:
-      'Code, AI, and commercial judgement are not three skills. Used together they are one way of seeing.',
-    domains: ['code', 'ai', 'business'],
+    title: 'Internal Tool',
+    description: 'An exploration of simpler workflows, clearer information, and less repetitive work.',
+    status: 'IN PROGRESS',
   },
 ];
 
-export const build: BuildContent = {
-  heading: 'What I build.',
-  intro:
-    'Three habits, and the technologies underneath them. The habits are the part that is hard to copy.',
-  capabilities,
-  mapHeading: 'Where the work sits.',
-  mapCaption:
-    'Each mark is something I have actually built or am building. Lines are the relationships between them. The map is drawn from the ledger below, so it changes as the work does.',
-  toolsLabel: 'Underneath',
+export const work: WorkContent = {
+  heading: 'Selected work, in progress.',
+  subheading: 'Early concepts, shown honestly as ideas rather than finished client work.',
+  projects,
+  footnote:
+    'Concept visuals are illustrative. Live previews and repositories will be linked when available.',
+};
+
+export const capabilities: CapabilitiesContent = {
+  heading: 'From the right question to the right thing.',
+  intro: 'The tools matter. What matters more is knowing what to build, why it matters, and how to make it work.',
+  capabilities: [
+    {
+      title: 'Make ideas tangible',
+      description: 'Turn something argued about in the abstract into something you can see, use, and react to.',
+    },
+    {
+      title: 'Find the leverage',
+      description: 'Find the smallest change that moves the result further than the obvious one.',
+    },
+    {
+      title: 'Connect the dots',
+      description: 'Link problems that look unrelated into a single, workable shape.',
+    },
+  ],
+  toolsLabel: 'Tools',
   tools: [
     'Python',
     'TypeScript',
@@ -122,93 +126,37 @@ export const build: BuildContent = {
   ],
 };
 
-/* ---------------------------------------------------------------------------
-   The archive. Status is explicit so the record cannot overstate itself.
-   Nothing is marked shipped, because nothing has shipped yet.
-   ------------------------------------------------------------------------ */
-const ledgerEntries: readonly LedgerEntry[] = [
-  {
-    id: 'landing-system',
-    title: 'Business Landing Page System',
-    summary:
-      'A flexible direction for turning a business idea into a clear, useful first impression, without rebuilding it from nothing each time.',
-    status: 'concept',
-    period: '2026',
-    kind: 'Direction',
-    domains: ['code', 'business'],
-    links: ['internal-tool'],
-  },
-  {
-    id: 'internal-tool',
-    title: 'Internal Tool',
-    summary:
-      'An exploration of simpler workflows, clearer information, and less repetitive work. Currently the most concrete thing in progress.',
-    status: 'building',
-    period: 'Now',
-    kind: 'Tool',
-    domains: ['code', 'ai'],
-    links: ['landing-system', 'automation'],
-  },
-  {
-    id: 'automation',
-    title: 'Repetitive Work, Removed',
-    summary:
-      'Auditing my own week for the parts that do not need a human, then removing them properly rather than half-way.',
-    status: 'building',
-    period: '2026',
-    kind: 'Experiment',
-    domains: ['ai', 'business'],
-    links: ['internal-tool'],
-  },
-];
-
-export const ledger: LedgerContent = {
-  heading: 'The ledger.',
-  intro:
-    'A running record of what I have built and what is in progress. It grows as the work does.',
-  entries: ledgerEntries,
-  footnote:
-    'Concept visuals are illustrative. Nothing here is presented as client work, and nothing is marked shipped until it is.',
-};
-
-const ideaEntries: readonly IdeaEntry[] = [
+const thinkingEntries: readonly ThinkingEntry[] = [
   {
     title: 'Why most AI features feel like demos',
     summary:
-      'Interfaces that demonstrate a model instead of removing a task. What it actually takes to make the capability disappear into the product.',
+      'Interfaces that show off a model instead of removing a task, and what it takes to make the capability disappear into the product.',
     status: 'DRAFT IDEA',
   },
   {
     title: 'Automation worth the maintenance',
     summary:
-      'Not every repeated process should be automated. Where the effort genuinely pays back, and where it quietly does not.',
+      'Not every repeated process should be automated. A closer look at where the effort actually pays back.',
     status: 'COMING SOON',
   },
   {
     title: 'The quiet cost of a growing codebase',
     summary:
-      'Small structural decisions compound. What is worth fixing early, and what can wait until it hurts.',
+      'How small structural decisions compound, and what is worth fixing early rather than later.',
     status: 'COMING SOON',
   },
 ];
 
 export const thinking: ThinkingContent = {
-  heading: 'How I think, in writing.',
-  entries: ideaEntries,
+  heading: 'Ideas worth exploring.',
+  entries: thinkingEntries,
 };
 
 export const philosophy: PhilosophyContent = {
   quote:
-    'Good work begins with good questions. The goal is not to build more. It is to build what creates value, holds up over time, and should exist in the first place.',
-  attribution: 'Kevin Charlie',
-};
-
-export const now: NowContent = {
-  heading: 'Now.',
-  intro: 'What has my attention at the moment, and what comes out of it.',
-  activeIds: ['internal-tool', 'automation'],
-  closing:
-    'If any of this is the kind of problem you are sitting with, I would like to hear about it.',
+    "Good work begins with good questions. The goal is not to build more. It's to build what creates value, holds up over time, and should exist in the first place.",
+  signatureName: 'Kevin Charlie',
+  signatureMeta: 'Build with intention',
 };
 
 export const contact: ContactContent = {
@@ -219,36 +167,30 @@ export const contact: ContactContent = {
 
 export const contactModal: ContactModalContent = {
   title: 'Contact details coming soon',
-  body: 'Direct contact details are not published yet. They will be added here as soon as they are ready.',
+  body: "Direct contact details aren't published yet. They'll be added here as soon as they're ready.",
   closeLabel: 'Close',
 };
 
-export const footer: FooterContent = {
-  columns: [
-    {
-      heading: 'The record',
-      links: [
-        { label: 'Introduction', href: '#introduction' },
-        { label: 'What I build', href: '#build' },
-        { label: 'Ledger', href: '#ledger' },
-      ],
-    },
-    {
-      heading: 'Thinking',
-      links: [
-        { label: 'Writing', href: '#thinking' },
-        { label: 'Philosophy', href: '#philosophy' },
-        { label: 'Now', href: '#now' },
-        { label: 'Contact', href: '#contact' },
-      ],
-    },
-  ],
-  legal: 'A working record. Concept work is labelled; nothing is claimed as shipped until it is.',
-  copyright: 'Kevin Charlie',
-};
+const footerColumns: readonly FooterColumn[] = [
+  {
+    heading: 'Sections',
+    links: [
+      { label: 'About', href: '#about' },
+      { label: 'Work', href: '#work' },
+      { label: 'Capabilities', href: '#capabilities' },
+    ],
+  },
+  {
+    heading: 'More',
+    links: [
+      { label: 'Thinking', href: '#thinking' },
+      { label: 'Philosophy', href: '#philosophy' },
+      { label: 'Contact', href: '#contact' },
+    ],
+  },
+];
 
-export const domainLabels: Record<Domain, string> = {
-  code: 'Code',
-  ai: 'AI',
-  business: 'Business',
+export const footer: FooterContent = {
+  columns: footerColumns,
+  legal: 'This site is a prototype. Concept work is labelled as such.',
 };

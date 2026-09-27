@@ -1,7 +1,9 @@
 import Button from '../ui/Button';
+import Reveal from '../ui/Reveal';
 import { contact } from '../../data/content';
 
 export interface ContactProps {
+  /** Opens the contact modal. */
   readonly onContact: () => void;
 }
 
@@ -10,23 +12,27 @@ export default function Contact({ onContact }: ContactProps) {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="bg-paper-deep py-section md:py-section-md lg:py-section-lg"
+      className="bg-paper py-section md:py-section-md lg:py-section-lg"
     >
-      <div className="mx-auto w-full max-w-shell px-gutter sm:px-gutter-sm lg:px-gutter-lg">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
-          <h2
-            id="contact-heading"
-            className="text-statement font-semibold tracking-statement text-balance text-ink lg:col-span-8"
-          >
-            {contact.heading}
-          </h2>
+      <div className="mx-auto w-full max-w-shell px-gutter md:px-gutter-md lg:px-gutter-lg">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-end lg:gap-20">
+          <Reveal>
+            <h2
+              id="contact-heading"
+              className="max-w-[16ch] text-heading font-semibold text-balance text-ink"
+            >
+              {contact.heading}
+            </h2>
+          </Reveal>
 
-          <div className="lg:col-span-4 lg:pt-3">
-            <p className="text-body text-ink-2">{contact.line}</p>
-            <div className="mt-8">
-              <Button onClick={onContact}>{contact.actionLabel}</Button>
+          <Reveal delay={0.1}>
+            <div>
+              <p className="max-w-prose text-body text-ink-secondary">{contact.line}</p>
+              <div className="mt-8">
+                <Button onClick={onContact}>{contact.actionLabel}</Button>
+              </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
