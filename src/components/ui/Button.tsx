@@ -1,13 +1,18 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
+import { ArrowDownIcon } from '@phosphor-icons/react';
 import { cn, PRESS, PRESS_TEXT } from '../../lib/utils';
 
 /* ---------------------------------------------------------------------------
    Two shapes, one job each.
 
-   The pill is the solid action: the primary CTA, and nothing else competes
-   with it. The text action sits beside it for secondary moves. Neither
-   inflates, and neither bounces — press feedback is a fill step plus a 0.97
-   scale over 100ms, which reads as direct rather than animated.
+   The pill is the solid action and nothing else competes with it. It carries
+   no mark: an icon beside the label would only repeat what the label already
+   says, and the pill is the loudest thing on the page without one. The text
+   action is the quiet alternative and it scrolls the page, so its arrow points
+   down, which is the one place an icon earns its place.
+
+   Neither inflates and neither bounces. Press feedback is a fill step plus a
+   0.97 scale over 100ms, which reads as direct rather than animated.
    ------------------------------------------------------------------------ */
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> {
   readonly children: ReactNode;
@@ -40,25 +45,19 @@ const TEXT_CLASSES = cn(
   PRESS_TEXT,
 );
 
-/** A quiet secondary action: an arrow that advances on hover. */
+/**
+ * The quiet secondary action. It scrolls down the page, so the affordance
+ * points down: the arrow nudges 2px on hover, transform only, at the snap
+ * duration, and does not move at all under reduced motion.
+ */
 export function TextAction({ children, className, ...rest }: TextActionProps) {
   return (
     <a {...rest} className={cn(TEXT_CLASSES, className)}>
       {children}
-      <svg
+      <ArrowDownIcon
         aria-hidden="true"
-        viewBox="0 0 14 10"
-        className="h-2.5 w-3.5 shrink-0 transition-transform duration-[var(--duration-snap)] ease-[var(--ease-settle)] group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-        fill="none"
-      >
-        <path
-          d="M1 5h11M8.5 1.5 12 5l-3.5 3.5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+        className="shrink-0 transition-transform duration-[var(--duration-snap)] ease-[var(--ease-settle)] group-hover:translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0"
+      />
     </a>
   );
 }

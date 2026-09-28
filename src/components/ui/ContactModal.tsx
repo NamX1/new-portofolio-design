@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { XIcon } from '@phosphor-icons/react';
 import Button from './Button';
 import { contactModal } from '../../data/content';
 
@@ -111,10 +112,22 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
               transition={reduceMotion ? CROSS_FADE : SPRING}
               className={`pointer-events-auto w-full max-w-md rounded-3xl border border-material-border p-8 shadow-[0_32px_64px_-32px_rgb(11_13_16/0.4)] ${MATERIAL}`}
             >
-                  <h2 id={titleId} className="text-lede font-semibold text-ink">
-                {contactModal.title}
-              </h2>
+              <div className="flex items-start justify-between gap-6">
+                <h2 id={titleId} className="text-lede font-semibold text-ink">
+                  {contactModal.title}
+                </h2>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  aria-label={contactModal.closeLabel}
+                  className="-mt-1.5 -mr-1.5 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ink-secondary transition-colors duration-[var(--duration-press)] ease-[var(--ease-instant)] hover:bg-paper-alt hover:text-ink"
+                >
+                  <XIcon aria-hidden="true" />
+                </button>
+              </div>
+
               <p className="mt-3 text-body text-ink-secondary">{contactModal.body}</p>
+
               <div className="mt-8">
                 <Button onClick={onClose}>{contactModal.closeLabel}</Button>
               </div>

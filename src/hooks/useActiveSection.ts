@@ -30,8 +30,8 @@ const SECTION_IDS: readonly SectionId[] = navItems.map((item) => item.id);
 
 /**
  * Provides the currently-read section to every consumer, from one observer.
- * The context exists so Header and MobileNav share a single observer rather
- * than each attaching their own.
+ * The context exists so the header island and the expanded link list share
+ * one observer rather than each attaching their own.
  */
 export function ActiveSectionProvider({ children }: { children: ReactNode }) {
   const activeId = useActiveSection(SECTION_IDS);

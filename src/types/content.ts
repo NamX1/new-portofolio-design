@@ -15,6 +15,8 @@ export interface NavItem {
 
 export interface BrandContent {
   readonly name: string;
+  /** First name only, for the compact navigation island. */
+  readonly shortName: string;
   readonly tagline: string;
 }
 
@@ -23,6 +25,8 @@ export interface UiStrings {
   readonly navLabel: string;
   readonly openMenu: string;
   readonly closeMenu: string;
+  /** The label on the collapsed navigation trigger. */
+  readonly sectionsTrigger: string;
   readonly contactAction: string;
   readonly backToTop: string;
   readonly unavailable: string;
@@ -108,6 +112,9 @@ export interface ContactContent {
   readonly heading: string;
   readonly line: string;
   readonly actionLabel: string;
+  /** Direct channels. An empty string means no link is rendered for it. */
+  readonly email: string;
+  readonly github: string;
 }
 
 export interface ContactModalContent {

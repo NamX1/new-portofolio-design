@@ -28,14 +28,16 @@ import type {
 
 export const brand: BrandContent = {
   name: 'Kevin Charlie',
+  shortName: 'Kevin',
   tagline: 'Building What Should Exist.',
 };
 
 export const ui: UiStrings = {
   skipToContent: 'Skip to content',
   navLabel: 'Primary',
-  openMenu: 'Open menu',
-  closeMenu: 'Close menu',
+  openMenu: 'Open sections',
+  closeMenu: 'Close sections',
+  sectionsTrigger: 'Sections',
   contactAction: 'Contact Me',
   backToTop: 'Back to top',
   unavailable: 'Not available yet',
@@ -116,14 +118,10 @@ export const capabilities: CapabilitiesContent = {
     },
   ],
   toolsLabel: 'Tools',
-  tools: [
-    'Python',
-    'TypeScript',
-    'Node.js',
-    'Automation',
-    'AI-assisted development',
-    'Problem solving',
-  ],
+  /* Every entry here is a real, named technology. Practices and soft skills
+     used to sit in this list and were not tools: they have no mark, no
+     version, and nothing to be fluent in. This is now a factual stack. */
+  tools: ['Python', 'TypeScript', 'Go', 'Next.js', 'Node.js', 'Tailwind CSS', 'Git'],
 };
 
 const thinkingEntries: readonly ThinkingEntry[] = [
@@ -163,6 +161,11 @@ export const contact: ContactContent = {
   heading: 'Have something worth building?',
   line: 'Tell me what is broken, or what is missing. That is usually enough to start.',
   actionLabel: 'Contact Me',
+  /* Direct channels. A link is only rendered when its value is non-empty,
+     so adding a channel here is all that is needed to surface it. Email is
+     left blank until an address is provided; GitHub is the only one set. */
+  email: '',
+  github: 'https://github.com/NamX1',
 };
 
 export const contactModal: ContactModalContent = {
